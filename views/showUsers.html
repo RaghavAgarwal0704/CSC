@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>CSC | Users</title>
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    </head>
+    <body>
+        <div class="nav">
+            <div class="nav-header">
+              <div class="nav-title">
+                CSC UPCL 
+              </div>
+            </div>
+            
+            <div class="nav-links">
+              <a href="/" class="active">Home</a>
+              <a href="/newUserRegistration">New User</a>
+              <a href="/newComplaintRegistration">New Complaint</a>
+              <a href="/showALLComplaints">Show Complaints</a>
+              <a href="/deleteComplaint">Delete Complaint</a>
+              <a href="/updateComplaint">Update Complaint</a>
+              <a href="/showAllUsers">Show Users</a>
+            </div>
+        </div>
+        </div>
+        <div  class="showUserDiv">
+            <table class="styled-table">
+                <thead>
+                    <th>Consumer No.</th>
+                    <th>Account No.</th>
+                    <th>Name</th>
+                    <th>Mobile No.</th>
+                    <th>Address</th>
+                </thead>
+                <tbody>
+                    <% data.forEach(function(x){ %>
+                        <tr>
+                            <td><%=x.cons_no%></td>
+                            <td><%=x.acc_no%></td>
+                            <td><%=x.name%></td>
+                            <td><%=x.mobile%></td>
+                            <td><%=x.address%></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <div class='footer'>&copy2021 Website created and maintained by Infinite Computer Solutions Ltd.</div>
+    </body>
+</html>

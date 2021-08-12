@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>CSC | Update Complaint</title>
+        <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    </head>
+    <body>
+        <div class="nav">
+            <div class="nav-header">
+              <div class="nav-title">
+                CSC UPCL 
+              </div>
+            </div>
+            
+            <div class="nav-links">
+              <a href="/" class="active">Home</a>
+              <a href="/newUserRegistration">New User</a>
+              <a href="/newComplaintRegistration">New Complaint</a>
+              <a href="/showALLComplaints">Show Complaints</a>
+              <a href="/deleteComplaint">Delete Complaint</a>
+              <a href="/updateComplaint">Update Complaint</a>
+              <a href="/showAllUsers">Show Users</a>
+            </div>
+        </div>
+        <form action="./updateComplaint" method="POST" name="inputForm" class="form-style-9">
+            <ul>
+                <li>
+                    <input type="Number" placeholder="Account No." name="acc_no" class="field-style field-split align-left" id="id">
+                    <input type="button" onclick="checkComp()" id="button" class="field-style field-split align-right" value="Verify">
+                </li>
+                <li>
+                    <select name="comp_type" id="comp_type" disabled required class="field-style field-full align-none">
+                        <option hidden>Select complaint type</option>
+                        <option>Power Supply Failure</option>
+                        <option>Pole related</option>
+                        <option>Transformer related</option>
+                        <option>Bill related</option>
+                        <option>Metering related</option>
+                        <option>Theft case</option>
+                        <option>Voltage fluctuation</option>
+                        <option>Online payment complaint</option>
+                        <option>Disconnection</option>
+                        <option>General</option>
+                        <option >Other Customer Services</option>
+                    </select>
+                    <!-- <input type="text" placeholder="Complaint Type" id="comp_type" name="comp_type" class="field-style field-full align-none" disabled required> -->
+                </li>
+                <li>
+                    <input type="text" placeholder="Complaint" id="complaint" name="complaint" class="field-style field-full align-none" disabled required>
+                </li>
+                <li>
+                    <input type="submit" id="submit" class="field-style field-full align-none" value="Update" disabled>
+                </li>
+            </ul>
+        </form>
+        <script>
+            function checkComp(){
+                $.get('/getComplaints',function(data){
+                    var acc=document.inputForm.acc_no.value;
+                    var flag=0;
+                    var comp;
+                    var comp_type;
+                    data.forEach(element => {
+                        if(element.acc_no==acc){flag=1;comp=element.complaint;comp_type=element.comp_type;}
+                    });
+                    if(flag==1){
+                        document.getElementById('id').readOnly=true;
+                        document.getElementById('button').disabled=true;
+                        document.getElementById('comp_type').disabled=false;
+                        document.getElementById('complaint').disabled=false;
+                        document.getElementById('submit').disabled=false;
+                        document.getElementById('comp_type').value=comp_type;
+                        document.getElementById('complaint').value=comp;
+                    }
+                    else{
+                        alert("Account number does not exist..Try Again");
+                        document.getElementById('id').readOnly=false;
+                        document.getElementById('button').disabled=false;
+                        document.getElementById('submit').disabled=true;
+                        document.getElementById('comp_type').disabled=true;
+                        document.getElementById('complaint').disabled=true;
+                        document.getElementById('comp_type').placeholder="Complaint Type";
+                        document.getElementById('complaint').placeholder="Complaint";
+                    }
+                });
+            }
+        </script>
+        <div class='footer'>&copy2021 Website created and maintained by Infinite Computer Solutions Ltd.</div>
+    </body>
+</html>

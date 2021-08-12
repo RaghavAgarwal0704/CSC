@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>CSC | New User</title>
+        <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    </head>
+    <body>
+        <div class="nav">
+            <div class="nav-header">
+              <div class="nav-title">
+                CSC UPCL 
+              </div>
+            </div>
+            
+            <div class="nav-links">
+              <a href="/" class="active">Home</a>
+              <a href="/newUserRegistration">New User</a>
+              <a href="/newComplaintRegistration">New Complaint</a>
+              <a href="/showALLComplaints">Show Complaints</a>
+              <a href="/deleteComplaint">Delete Complaint</a>
+              <a href="/updateComplaint">Update Complaint</a>
+              <a href="/showAllUsers">Show Users</a>
+            </div>
+        </div>
+        <form action="./newUser" method="POST" name="inputForm" class="form-style-9">
+            <ul>
+                <li>
+                    <input type="number" placeholder="Consumer No." class="field-style field-split align-left" name="cons_no" required>
+                    <input type="number" placeholder="Account No." class="field-style field-split align-right" name="acc_no" required>
+                </li>
+                <li>
+                    <input type="button" onclick="checkAccNoConsNo()" value="Verify">
+                </li>
+                <li>
+                    <input type="text" placeholder="Name" class="field-style field-split align-left" id="name" name="name" disabled required>
+                    <input type="text" placeholder="Mobile" class="field-style field-split align-right" id="mobile" name="mobile" pattern="[6789][0-9]{9}" disabled required>
+                </li>
+                <li>
+                    <input type="text" placeholder="Address" class="field-style field-full align-none" id="address" name="address" disabled required>
+                </li>
+                <li>
+                    <input type="submit" value="Register" id="submit" disabled>
+                </li>
+            </ul>
+        </form>
+        <script>
+            function checkAccNoConsNo(){
+                var acc=document.inputForm.acc_no.value;
+                var cons=document.inputForm.cons_no.value;
+                $.get('/getAccNoConsNo',function(data){
+                    var flagA=0;
+                    var flagC=0;
+                    data[0].forEach(element => {
+                        if(element==acc)flagA=1;
+                    });
+                    data[1].forEach(element => {
+                        if(element==cons)flagC=1;
+                    });
+                    if(cons=="" || acc=="")alert('Please enter both fields.');
+                    if(flagA==1){
+                        if(flagC==1){
+                            document.getElementById('name').disabled=true;
+                            document.getElementById('mobile').disabled=true;
+                            document.getElementById('address').disabled=true;
+                            document.getElementById('submit').disabled=true;
+                            alert('Consumer No. '+cons+" and Account No. "+acc+" already exists.");
+                        }
+                        else{
+                            document.getElementById('name').disabled=true;
+                            document.getElementById('mobile').disabled=true;
+                            document.getElementById('address').disabled=true;
+                            document.getElementById('submit').disabled=true;
+                            alert('Account No.'+acc+" already exists");
+                        }
+                    }
+                    else {
+                        if(flagC==1){
+                            document.getElementById('name').disabled=true;
+                            document.getElementById('mobile').disabled=true;
+                            document.getElementById('address').disabled=true;
+                            document.getElementById('submit').disabled=true;
+                            alert('Consumer No. '+cons+' already exists');
+                        }
+                        else{
+                            document.getElementById('name').disabled=false;
+                            document.getElementById('mobile').disabled=false;
+                            document.getElementById('address').disabled=false;
+                            document.getElementById('submit').disabled=false;
+                        }
+                    }
+                });
+            }
+        </script>
+        <div class='footer'>&copy2021 Website created and maintained by Infinite Computer Solutions Ltd.</div>
+    </body>
+</html>
